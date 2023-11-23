@@ -33,6 +33,21 @@ export class IonAlertComponent implements OnInit, OnChanges {
 
   @ViewChild('ionAlert', { static: false }) private ionAlert: ElementRef;
 
+  // public formConfig = {
+  //   fields: [
+  //     new TextField({
+  //       key: 'nome',
+  //       label: 'Nome',
+  //       required: true,
+  //       placeholder: 'Digite um nome',
+  //       // icon: 'check',
+  //     }),
+  //   ],
+  //   model: {
+  //     select: [1, 4, 1230],
+  //   },
+  // };
+
   iconType: IconType;
 
   hasPlainText: boolean;

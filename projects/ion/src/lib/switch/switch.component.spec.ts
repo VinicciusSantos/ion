@@ -1,3 +1,11 @@
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 import { SafeAny } from '../utils/safe-any';
@@ -68,5 +76,50 @@ describe('IonSwitchComponent', () => {
       ionSwitch = await sut({ disabled: true });
       expect(ionSwitch).toBeDisabled();
     });
+  });
+});
+
+@Component({
+  template: `
+    <form [formGroup]="formGroup">
+      <ion-switch formControlName="name" key="name"></ion-switch>
+      <ion-switch formControlName="email" key="email"></ion-switch>
+    </form>
+  `,
+})
+class HostInputComponent {
+  formGroup = new FormGroup({
+    name: new FormControl(false),
+    email: new FormControl({ value: false, disabled: true }),
+  });
+}
+
+const sutHost = async (
+  props: Partial<HostInputComponent> = {}
+): Promise<Element> => {
+  const { container } = await render(HostInputComponent, {
+    componentProperties: props,
+    declarations: [IonSwitchComponent],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  });
+  return container;
+};
+
+describe('SwitchComponent - Angular Forms', () => {
+  let container;
+
+  beforeEach(async () => {
+    container = await sutHost({});
+  });
+
+  it('should render switch', () => {
+    expect(container.querySelector('#name')).toBeInTheDocument();
+  });
+  it('should render component disabled', () => {
+    expect(container.querySelector('#email')).toBeDisabled();
+  });
+  it('should change to active when click', () => {
+    userEvent.click(container.querySelector('#name'));
+    expect(container.querySelector('#name')).toHaveClass('ion-switch--active');
   });
 });

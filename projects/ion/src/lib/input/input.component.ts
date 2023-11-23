@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IonButtonProps } from '../core/types';
+/* eslint-disable @typescript-eslint/no-empty-function */
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IconDirection, IconType } from '../core/types/icon';
 import { InputType } from '../core/types/input';
 
@@ -7,13 +9,21 @@ import { InputType } from '../core/types/input';
   selector: 'ion-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: IonInputComponent,
+      multi: true,
+    },
+  ],
 })
-export class IonInputComponent implements OnInit {
+export class IonInputComponent implements ControlValueAccessor {
+  @Input() key = '';
   @Input() placeholder?: string;
   @Input() button = 'Button';
   @Input() iconInput: IconType;
   @Input() disabled = false;
-  @Input() iconDirection?: IconDirection;
+  @Input() iconDirection?: IconDirection = 'left';
   @Input() valid: boolean;
   @Input() invalid: boolean;
   @Input() errorMsg?: string;
@@ -35,13 +45,42 @@ export class IonInputComponent implements OnInit {
     this.valueChange.emit(value);
   }
 
+  onTouch = () => {};
+
+  setValue(value: string): void {
+    this.writeValue(value);
+    this.onTouch();
+  }
+
   public handleClick(): void {
     this.clickButton.emit();
   }
 
+  // Allow Angular to set the value on the component
+  writeValue(value: string): void {
+    this.onChange(value);
+    this.value = value;
+  }
+
+  // Save a reference to the change function passed to us by
+  // the Angular form control
+  registerOnChange(fn: (value: string) => void): void {
+    this.onChange = fn;
+  }
+
+  // Save a reference to the touched function passed to us by
+  // the Angular form control
+  registerOnTouched(fn: () => void): void {
+    this.onTouch = fn;
+  }
+
+  // Allow the Angular form control to disable this input
+  setDisabledState(disabled: boolean): void {
+    this.disabled = disabled;
+  }
+
   public clearInput(): void {
-    this.value = '';
-    this.onChange(this.value);
+    this.writeValue('');
   }
 
   public isClearButtonVisible(): boolean {

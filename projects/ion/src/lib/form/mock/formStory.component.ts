@@ -18,6 +18,7 @@ export class FormStoryComponent implements AfterViewInit {
 
   // if you generate your field this way, you can access the methods directly (and change properties)
   fieldName = new TextField({
+    key: 'nome',
     label: 'Nome',
     required: true,
     placeholder: 'Insira seu nome...',
@@ -25,6 +26,7 @@ export class FormStoryComponent implements AfterViewInit {
   });
 
   description = new TextAreaField({
+    key: 'descricao',
     label: 'Descrição',
     placeholder: 'Escreva algo...',
   });
@@ -34,6 +36,7 @@ export class FormStoryComponent implements AfterViewInit {
     description: this.description,
     // generating this way, you'll not be able to change properties
     email: new TextField({
+      key: 'email',
       label: 'E-mail',
       required: false,
       placeholder: 'Insira seu e-mail',
@@ -41,6 +44,7 @@ export class FormStoryComponent implements AfterViewInit {
       validators: [Validators.email],
     }),
     desabilitar: new SwitchField({
+      key: 'desabilitar:',
       label: 'Desabilitar:',
     }),
   };

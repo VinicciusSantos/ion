@@ -1,6 +1,7 @@
 import { AbstractControl, ValidatorFn, Validators } from '@angular/forms';
 
 export interface IFormField {
+  key: string;
   disabled?: boolean;
   show?: boolean;
   size?: number;

@@ -40,7 +40,7 @@ export class FormStoryComponent implements AfterViewInit {
       label: 'E-mail',
       required: false,
       placeholder: 'Insira seu e-mail',
-      icon: 'pencil',
+      iconInput: 'pencil',
       validators: [Validators.email],
     }),
     desabilitar: new SwitchField({

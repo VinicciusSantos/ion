@@ -11,6 +11,7 @@ export interface IonInputProps {
   button?: string;
   iconInput?: string;
   disabled?: boolean;
+  readonly?: boolean;
   iconDirection?: IconDirection;
   valid?: boolean;
   invalid?: boolean;

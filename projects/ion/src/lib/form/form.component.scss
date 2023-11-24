@@ -1,0 +1,30 @@
+@import '../../styles/index.scss';
+
+$base-width: 8.3%;
+$form-gap: 20px;
+
+@for $i from 1 through 12 {
+  .md-#{$i} {
+    width: calc($base-width * $i - $form-gap);
+  }
+}
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $form-gap;
+}
+
+
+.ion-form-field {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    margin-bottom: 4px;
+    color: $neutral-7;
+    font-size: 14px;
+    font-weight: 400;
+  }
+}
+

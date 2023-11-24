@@ -2,6 +2,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { ITextField, TextField } from './textField';
 
 const fields: ITextField = {
+  key: 'test',
   label: 'Teste',
   placeholder: 'Teste',
 };

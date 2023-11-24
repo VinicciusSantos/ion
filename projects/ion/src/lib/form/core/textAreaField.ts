@@ -1,16 +1,14 @@
 import { FormField, IFormField } from './baseField';
+import { IonInputAreaProps } from '../../core/types';
 
-export interface ITextAreaField extends IFormField {
-  label: string;
-  placeholder: string;
-  cols?: string;
-  rows?: string;
-}
+export type ITextAreaField = IFormField & IonInputAreaProps;
 
 export class TextAreaField extends FormField {
   label = '';
   placeholder: string;
   type = 'textarea';
+  cols: string;
+  rows: string;
 
   constructor({ placeholder, label, ...props }: ITextAreaField) {
     super(
@@ -20,7 +18,10 @@ export class TextAreaField extends FormField {
       props.required,
       props.validators
     );
+    this.key = props.key;
     this.label = label;
     this.placeholder = placeholder;
+    this.cols = props.cols;
+    this.rows = props.rows;
   }
 }

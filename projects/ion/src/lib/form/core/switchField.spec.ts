@@ -2,10 +2,11 @@ import { FormControl, Validators } from '@angular/forms';
 import { ISwitchField, SwitchField } from './switchField';
 
 const fields: ISwitchField = {
+  key: 'test',
   label: 'Teste',
 };
 
-describe('TextAreaField', () => {
+describe('SwitchField', () => {
   let switchField: SwitchField;
   const formControl = new FormControl(false);
 

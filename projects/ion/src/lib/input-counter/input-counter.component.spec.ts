@@ -79,7 +79,7 @@ describe('InputCounter', () => {
 
   it('should enter non-numeric characters and not affect the value of input-number', async () => {
     const inputCounter = screen.getByTestId('input-count') as HTMLInputElement;
-    const value = '111';
+    const value = '123456789';
     userEvent.type(inputCounter, value);
     expect(inputCounter.value).toBe(value);
     userEvent.type(inputCounter, 'abc');

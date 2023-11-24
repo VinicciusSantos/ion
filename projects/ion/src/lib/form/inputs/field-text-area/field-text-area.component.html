@@ -1,0 +1,12 @@
+<div [formGroup]="formGroup" *ngIf="formGroup.controls[field.key]" class="ion-form-field">
+    <label [for]="field.key">
+        {{ field.label }}
+    </label>
+    <ion-input-area
+            [key]="field.key"
+            [placeholder]="field.placeholder"
+            [cols]="field.cols"
+            [rows]="field.rows"
+            [formControlName]="field.key"
+    ></ion-input-area>
+</div>

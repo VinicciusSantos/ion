@@ -3,6 +3,7 @@ import { ITextAreaField, TextAreaField } from './textAreaField';
 import { TextField } from './textField';
 
 const fields: ITextAreaField = {
+  key: 'test',
   label: 'Teste',
   placeholder: 'Teste',
 };
@@ -40,7 +41,7 @@ describe('TextAreaField', () => {
     expect(textAreaField.getValidators()).not.toContain(Validators.required);
   });
   it('should not have required validator', () => {
-    textAreaField = new TextField({ ...fields, required: true });
+    textAreaField = new TextAreaField({ ...fields, required: true });
     expect(textAreaField.getValidators()).toContain(Validators.required);
   });
 });

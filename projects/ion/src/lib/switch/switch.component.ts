@@ -24,13 +24,14 @@ export class IonSwitchComponent implements ControlValueAccessor {
 
   onTouch = () => {};
 
-  onChange = (value: boolean) => {};
+  onChange = (value: boolean) => {
+    this.atValueChange.emit(value);
+  };
 
   writeValue(value: boolean): void {
     this.value = value;
-    this.onTouch();
-    this.onChange(value);
-    this.atValueChange.emit(value);
+    this.executeFunction(this.onChange, value);
+    this.executeFunction(this.onTouch);
   }
 
   registerOnChange(fn: () => void): void {
@@ -43,5 +44,11 @@ export class IonSwitchComponent implements ControlValueAccessor {
 
   setDisabledState(disabled: boolean): void {
     this.disabled = disabled;
+  }
+
+  executeFunction(func: unknown, params?: unknown): void {
+    if (typeof func === 'function') {
+      func.bind(this)(params);
+    }
   }
 }

@@ -20,16 +20,20 @@ export class IonInputAreaComponent implements ControlValueAccessor {
   @Input() rows = '5';
   @Input() disabled = false;
   @Input() value: string;
+  @Input() expand?: boolean;
   @Input() placeholder?: string;
   @Output() valueChange = new EventEmitter<string>();
 
   onTouch = () => {};
 
-  onChange = (value: string) => {};
+  onChange = (value: string) => {
+    this.valueChange.emit(value);
+  }
 
   writeValue(value: string): void {
-    this.onChange(value);
-    this.valueChange.emit(value);
+    this.executeFunction(this.onChange, value);
+    this.executeFunction(this.onTouch);
+    this.value = value;
   }
 
   registerOnChange(fn: (value: string) => void): void {
@@ -42,5 +46,11 @@ export class IonInputAreaComponent implements ControlValueAccessor {
 
   setDisabledState(disabled: boolean): void {
     this.disabled = disabled;
+  }
+
+  executeFunction(func: unknown, params?: unknown): void {
+    if (typeof func === 'function') {
+      func.bind(this)(params);
+    }
   }
 }

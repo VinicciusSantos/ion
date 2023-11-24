@@ -1,11 +1,14 @@
-<textarea
-  data-testid="input-area"
-  [id]="key"
-  [attr.name]="key"
-  [cols]="cols"
-  [rows]="rows"
-  [disabled]="disabled"
-  [ngModel]="value"
-  (ngModelChange)="writeValue($event)"
-  [attr.placeholder]="placeholder"
-></textarea>
+<div [style.display]="'flex'">
+  <textarea
+    [style.width]="'100%'"
+    data-testid="input-area"
+    [id]="key"
+    [attr.name]="key"
+    [cols]="cols"
+    [rows]="rows"
+    [disabled]="disabled"
+    [ngModel]="value"
+    (ngModelChange)="writeValue($event)"
+    [attr.placeholder]="placeholder"
+  ></textarea>
+</div>

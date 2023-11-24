@@ -1,0 +1,24 @@
+<div [formGroup]="formGroup" *ngIf="formGroup.controls[field.key]" class="ion-form-field">
+  <label [for]="field.key">
+    {{ field.label }}
+  </label>
+  <ion-input
+    [key]="field.key"
+    [formControlName]="field.key"
+    [placeholder]="field.placeholder"
+    [iconInput]="field.icon"
+    [inputType]="field.inputType"
+    [valid]="field.valid"
+    [invalid]="
+      formGroup.controls[field.key]?.invalid &&
+      (formGroup.controls[field.key]?.dirty ||
+      formGroup.controls[field.key]?.touched)"
+    [iconDirection]="field.iconDirection"
+    [inputButton]="field.inputButton"
+    [inputButtonConfig]="field.inputButtonConfig"
+    [readonly]="field.readonly"
+    [clearButton]="field.clearButton"
+    [maxLength]="field.maxLength"
+    (valueChange)="valueChange($event)"
+  ></ion-input>
+</div>

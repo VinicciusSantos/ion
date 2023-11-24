@@ -9,11 +9,12 @@
 
   <input
     type="text"
+    [id]="key"
+    [attr.name]="key"
     oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"
-    [(ngModel)]="count"
     data-testid="input-count"
-    (ngModelChange)="changeCount($event)"
-    [value]="count"
+    [ngModel]="count"
+    (ngModelChange)="writeValue($event)"
   />
 
   <ion-button

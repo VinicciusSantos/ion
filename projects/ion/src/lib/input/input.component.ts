@@ -6,6 +6,7 @@ import { IconDirection, IconType } from '../core/types/icon';
 import { InputType } from '../core/types/input';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'ion-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss'],
@@ -17,10 +18,9 @@ import { InputType } from '../core/types/input';
     },
   ],
 })
-export class IonInputComponent implements ControlValueAccessor {
+export class IonInputComponent implements OnInit, ControlValueAccessor {
   @Input() key = '';
   @Input() placeholder?: string;
-  @Input() button = 'Button';
   @Input() iconInput: IconType;
   @Input() disabled = false;
   @Input() iconDirection?: IconDirection = 'left';
@@ -34,6 +34,7 @@ export class IonInputComponent implements ControlValueAccessor {
   @Input() clearButton = false;
   @Input() readonly = false;
   @Input() maxLength?: string | number | null = null;
+  @Input() label = '';
   @Output() valueChange = new EventEmitter<string>();
   @Output() clickButton = new EventEmitter();
 
@@ -49,7 +50,7 @@ export class IonInputComponent implements ControlValueAccessor {
 
   setValue(value: string): void {
     this.writeValue(value);
-    this.onTouch();
+    this.executeFunction(this.onTouch);
   }
 
   public handleClick(): void {
@@ -58,7 +59,7 @@ export class IonInputComponent implements ControlValueAccessor {
 
   // Allow Angular to set the value on the component
   writeValue(value: string): void {
-    this.onChange(value);
+    this.executeFunction(this.onChange, value);
     this.value = value;
   }
 
@@ -84,12 +85,18 @@ export class IonInputComponent implements ControlValueAccessor {
   }
 
   public isClearButtonVisible(): boolean {
-    return this.clearButton && this.value.length > 0;
+    return this.clearButton && this.value && this.value.length > 0;
   }
 
   private checkAndSetButtonSize(): void {
     if (this.inputButtonConfig && !this.inputButtonConfig.size) {
       this.inputButtonConfig.size = 'md';
+    }
+  }
+
+  private executeFunction(func: unknown, params?: unknown): void {
+    if (typeof func === 'function') {
+      func.bind(this)(params);
     }
   }
 }

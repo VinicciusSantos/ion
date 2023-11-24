@@ -1,48 +1,58 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
-import {FormField} from './core/baseField';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { FormField } from './core/baseField';
+import { clearObject } from '../../core/utils/clearObject';
 
-export interface FormComponentProps {
-    fields: {
-        [key: string]: FormField
-    };
-    formGroup?: FormGroup;
+export interface IonFormProps {
+  fields: IonFormFields;
+  formGroup?: FormGroup;
+}
+
+export interface IonFormFields {
+  [key: string]: FormField;
 }
 
 @Component({
-    selector: 'ion-form',
-    templateUrl: './form.component.html',
-    styleUrls: ['./form.component.scss'],
+  selector: 'ion-form',
+  templateUrl: './form.component.html',
+  styleUrls: ['./form.component.scss'],
 })
 export class FormComponent implements OnInit {
-    @Input() fields: {
-        [key: string]: FormField
-    };
-    @Input() formGroup = new FormGroup({});
-    @Input() model: {
-        [key: string]: unknown
-    } = {};
+  @Input() debugMode = false;
+  @Input() fields: IonFormFields;
+  @Input() formGroup = new FormGroup({});
 
-    public formFields: FormField[];
+  @Input() set model(model: any) {
+    this._model = model;
+  }
 
-    createForm(): void {
-        this.formFields = Object.values(this.fields);
-        this.formFields.forEach((field, index) => {
-            this.formGroup.addControl(
-                field.key,
-                new FormControl(
-                    {
-                        value: this.model[field.key] || '',
-                        disabled: field.getDisabled(),
-                    },
-                    field.getValidators()
-                )
-            );
-            field.setFormControl(this.formGroup.controls[field.key]);
-        });
-    }
+  get model() {
+    const value = this.formGroup.value || this._model;
+    return clearObject(value);
+  }
 
-    ngOnInit(): void {
-        this.createForm();
-    }
+  public formFields: FormField[];
+
+  private _model = {};
+
+  createForm(): void {
+    this.formFields = Object.values(this.fields);
+    this.formFields.forEach((field, index) => {
+      this.formGroup.addControl(
+        field.key,
+        new FormControl(
+          {
+            value: this._model[field.key] || null,
+            disabled: field.getDisabled(),
+          },
+          field.getValidators()
+        )
+      );
+      field.setFormControl(this.formGroup.controls[field.key]);
+    });
+  }
+
+  ngOnInit(): void {
+    this.createForm();
+  }
 }

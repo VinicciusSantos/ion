@@ -1,12 +1,9 @@
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { render, RenderResult, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
-import { IonIconModule } from '../icon/icon.module';
-import { IonInputAreaModule } from '../input-area/input-area.module';
-import { IonInputModule } from '../input/input.module';
-import { IonSwitchModule } from '../switch/switch.module';
 import { TextField } from './core/textField';
-import { FormComponent, FormComponentProps } from './form.component';
+import { FormComponent, IonFormProps } from './form.component';
+import { IonFormModule } from './form.module';
 
 const textFieldConfig = {
   key: 'title',
@@ -18,18 +15,12 @@ const textFieldConfig = {
 const textField = new TextField(textFieldConfig);
 
 const sut = async (
-  props: FormComponentProps = { fields: {} }
+  props: IonFormProps = { fields: {} }
 ): Promise<RenderResult<FormComponent, FormComponent>> => {
   return await render(FormComponent, {
+    excludeComponentDeclaration: true,
     componentProperties: props,
-    imports: [
-      FormsModule,
-      ReactiveFormsModule,
-      IonInputModule,
-      IonInputAreaModule,
-      IonSwitchModule,
-      IonIconModule,
-    ],
+    imports: [IonFormModule],
   });
 };
 

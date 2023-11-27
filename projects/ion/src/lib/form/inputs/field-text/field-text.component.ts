@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { TextField } from '../../core';
 
@@ -7,16 +7,9 @@ import { TextField } from '../../core';
   selector: 'ion-field-text',
   templateUrl: './field-text.component.html',
   styleUrls: ['./field-text.component.scss', '../../form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FieldTextComponent implements OnInit {
+export class FieldTextComponent {
   @Input() field!: TextField;
   @Input() formGroup = new FormGroup({});
-
-  constructor() {}
-
-  public valueChange(value: string): void {
-    this.field.valueChange(value);
-  }
-
-  ngOnInit() {}
 }

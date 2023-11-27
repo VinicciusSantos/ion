@@ -1,10 +1,16 @@
-<div [formGroup]="formGroup" *ngIf="formGroup.controls[field.key]" class="ion-form-field">
-    <label [for]="field.key">
-        {{ field.label }}
-    </label>
-    <ion-input-counter
-        [key]="field.key"
-        [formControlName]="field.key"
-        [inputSize]="field.inputSize"
-    ></ion-input-counter>
+<div
+  [formGroup]="formGroup"
+  *ngIf="formGroup.controls[field.key]"
+  class="ion-form-field"
+>
+  <label [for]="field.key">
+    {{ field.label }}
+  </label>
+  <ion-input-counter
+    [key]="field.key"
+    [formControlName]="field.key"
+    [inputSize]="field.inputSize"
+    [count]="formGroup.value[field.key]"
+    (changedValue)="changedValue($event)"
+  ></ion-input-counter>
 </div>

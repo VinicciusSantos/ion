@@ -1,6 +1,8 @@
-import { FormField, IFormField } from './baseField';
+import { FormField } from './baseField';
 import { InputType, IonInputProps } from '../../core/types/input';
 import { IconDirection, IonButtonProps } from '../../core/types';
+import { IClickInputButtonCallback, IFormField } from '../interfaces';
+import { FormGroup } from '@angular/forms';
 
 export type ITextField = IFormField & IonInputProps;
 
@@ -17,7 +19,7 @@ export class TextField extends FormField {
   readonly = false;
   clearButton = false;
   maxLength?: string | number | null = null;
-  onChanges?: (value: string) => void;
+  onClick?: (value: unknown) => void;
 
   constructor({ placeholder, label, ...props }: ITextField) {
     super(
@@ -25,7 +27,8 @@ export class TextField extends FormField {
       props.show,
       props.size,
       props.required,
-      props.validators
+      props.validators,
+      props.defaultValue,
     );
     this.key = props.key;
     this.label = label;
@@ -41,11 +44,17 @@ export class TextField extends FormField {
     this.maxLength = props.maxLength;
   }
 
-  public valueChange(changes?: string | ((value: string) => void)): TextField {
-    if (typeof changes === 'function') {
-      this.onChanges = changes;
-    } else if (changes && this.onChanges) {
-      this.onChanges('123');
+  public clickButton(callback?: IClickInputButtonCallback): FormField {
+    if (callback) {
+      this.onClick = callback;
+    } else if (this.onClick) {
+      const formGroup = this.formControl.root as FormGroup;
+      this.onClick({
+        value: this.value,
+        model: formGroup.value,
+        form: formGroup,
+        field: this,
+      });
     }
     return this;
   }

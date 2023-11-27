@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { TextAreaField } from '../../core/textAreaField';
 
@@ -7,12 +7,9 @@ import { TextAreaField } from '../../core/textAreaField';
   selector: 'ion-field-text-area',
   templateUrl: './field-text-area.component.html',
   styleUrls: ['./field-text-area.component.scss', '../../form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FieldTextAreaComponent implements OnInit {
+export class FieldTextAreaComponent {
   @Input() field!: TextAreaField;
   @Input() formGroup = new FormGroup({});
-
-  constructor() {}
-
-  ngOnInit() {}
 }

@@ -1,5 +1,6 @@
-import { FormField, IFormField } from './baseField';
+import { FormField } from './baseField';
 import { IonInputAreaProps } from '../../core/types';
+import { IFormField } from '../interfaces';
 
 export type ITextAreaField = IFormField & IonInputAreaProps;
 
@@ -16,7 +17,8 @@ export class TextAreaField extends FormField {
       props.show,
       props.size,
       props.required,
-      props.validators
+      props.validators,
+      props.defaultValue,
     );
     this.key = props.key;
     this.label = label;

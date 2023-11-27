@@ -20,7 +20,7 @@ form {
   display: flex;
   flex-direction: column;
 
-  label {
+  > label {
     margin-bottom: 4px;
     color: $neutral-7;
     font-size: 14px;

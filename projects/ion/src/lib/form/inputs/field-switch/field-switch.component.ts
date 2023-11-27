@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { SwitchField } from '../../core';
 
@@ -7,12 +7,9 @@ import { SwitchField } from '../../core';
   selector: 'ion-field-switch',
   templateUrl: './field-switch.component.html',
   styleUrls: ['./field-switch.component.scss', '../../form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FieldSwitchComponent implements OnInit {
+export class FieldSwitchComponent {
   @Input() field!: SwitchField;
   @Input() formGroup = new FormGroup({});
-
-  constructor() {}
-
-  ngOnInit() {}
 }

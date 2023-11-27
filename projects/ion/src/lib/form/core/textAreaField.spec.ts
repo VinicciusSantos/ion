@@ -1,6 +1,5 @@
 import { FormControl, Validators } from '@angular/forms';
 import { ITextAreaField, TextAreaField } from './textAreaField';
-import { TextField } from './textField';
 
 const fields: ITextAreaField = {
   key: 'test',

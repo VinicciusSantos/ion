@@ -42,16 +42,9 @@ export class IonInputComponent implements OnInit, ControlValueAccessor {
     this.checkAndSetButtonSize();
   }
 
-  onChange(value: string): void {
-    this.valueChange.emit(value);
-  }
+  onChange(value: string): void {}
 
-  onTouch = () => {};
-
-  setValue(value: string): void {
-    this.writeValue(value);
-    this.executeFunction(this.onTouch);
-  }
+  onTouch = (): void => {};
 
   public handleClick(): void {
     this.clickButton.emit();
@@ -59,8 +52,10 @@ export class IonInputComponent implements OnInit, ControlValueAccessor {
 
   // Allow Angular to set the value on the component
   writeValue(value: string): void {
-    this.executeFunction(this.onChange, value);
     this.value = value;
+    this.valueChange.emit(value);
+    this.executeFunction(this.onChange, value);
+    this.executeFunction(this.onTouch);
   }
 
   // Save a reference to the change function passed to us by

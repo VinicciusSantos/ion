@@ -1,5 +1,6 @@
-import { FormField, IFormField } from './baseField';
+import { FormField } from './baseField';
 import { SwitchSize } from '../../core/types';
+import { IFormField } from '../interfaces';
 
 export interface ISwitchField extends IFormField {
   label: string;
@@ -17,7 +18,8 @@ export class SwitchField extends FormField {
       props.show,
       props.size,
       props.required,
-      props.validators
+      props.validators,
+      props.defaultValue,
     );
     this.key = props.key;
     this.label = label;

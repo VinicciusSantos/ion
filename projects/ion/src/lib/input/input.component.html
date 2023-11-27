@@ -28,7 +28,7 @@
       class="my-input"
       [disabled]="disabled"
       [(ngModel)]="value"
-      (ngModelChange)="setValue($event)"
+      (ngModelChange)="writeValue($event)"
       data-testid="input-element"
       [readonly]="readonly"
       [maxlength]="maxLength"

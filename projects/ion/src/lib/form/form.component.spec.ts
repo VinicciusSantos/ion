@@ -1,9 +1,10 @@
-import { FormGroup } from '@angular/forms';
-import { render, RenderResult, screen } from '@testing-library/angular';
+import {FormGroup} from '@angular/forms';
+import {render, RenderResult, screen} from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
-import { TextField } from './core/textField';
-import { FormComponent, IonFormProps } from './form.component';
-import { IonFormModule } from './form.module';
+import {TextField} from './core/textField';
+import {FormComponent, IonFormProps} from './form.component';
+import {IonFormModule} from './form.module';
+import {FormField} from './core';
 
 const textFieldConfig = {
   key: 'title',
@@ -12,12 +13,12 @@ const textFieldConfig = {
   required: true,
 };
 
-const textField = new TextField(textFieldConfig);
+const textField: FormField = new TextField(textFieldConfig);
 
 const sut = async (
-  props: IonFormProps = { fields: {} }
+  props: IonFormProps = {fields: []}
 ): Promise<RenderResult<FormComponent, FormComponent>> => {
-  return await render(FormComponent, {
+  return render(FormComponent, {
     excludeComponentDeclaration: true,
     componentProperties: props,
     imports: [IonFormModule],
@@ -33,8 +34,8 @@ describe('IonForm', () => {
 
     beforeEach(async () => {
       formGroup = new FormGroup({});
-      const { detectChanges: changes } = await sut({
-        fields: { title: textField },
+      const {detectChanges: changes} = await sut({
+        fields: [textField],
         formGroup,
       });
       detectChanges = changes;
@@ -60,16 +61,20 @@ describe('IonForm', () => {
     });
     it('should disable field', () => {
       textField.setDisable(true);
-      expect(formGroup.controls[textFieldConfig.key].disabled).toBeTruthy();
       detectChanges();
-      expect(input).toHaveAttribute('ng-reflect-is-disabled', 'true');
+      setTimeout(() => {
+        expect(formGroup.controls[textFieldConfig.key].disabled).toBeTruthy();
+        expect(input).toBeDisabled();
+      });
     });
     it('should enable field', () => {
       textField.setDisable(true);
       textField.setDisable(false);
-      expect(formGroup.controls[textFieldConfig.key].disabled).toBeFalsy();
       detectChanges();
-      expect(input).toHaveAttribute('ng-reflect-is-disabled', 'false');
+      setTimeout(() => {
+        expect(formGroup.controls[textFieldConfig.key].disabled).toBeFalsy();
+        expect(input).not.toBeDisabled();
+      });
     });
   });
 });

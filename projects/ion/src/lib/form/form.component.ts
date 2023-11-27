@@ -4,29 +4,27 @@ import { FormField } from './core/baseField';
 import { clearObject } from '../../core/utils/clearObject';
 
 export interface IonFormProps {
-  fields: IonFormFields;
+  fields: FormField[];
   formGroup?: FormGroup;
-}
-
-export interface IonFormFields {
-  [key: string]: FormField;
+  model?: any
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'ion-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
 })
 export class FormComponent implements OnInit {
   @Input() debugMode = false;
-  @Input() fields: IonFormFields;
+  @Input() fields?: FormField[];
   @Input() formGroup = new FormGroup({});
 
-  @Input() set model(model: any) {
+  @Input() set model(model: object) {
     this._model = model;
   }
 
-  get model() {
+  get model(): object {
     const value = this.formGroup.value || this._model;
     return clearObject(value);
   }
@@ -37,12 +35,12 @@ export class FormComponent implements OnInit {
 
   createForm(): void {
     this.formFields = Object.values(this.fields);
-    this.formFields.forEach((field, index) => {
+    this.formFields.forEach((field) => {
       this.formGroup.addControl(
         field.key,
         new FormControl(
           {
-            value: this._model[field.key] || null,
+            value: field.defaultValue || this._model[field.key] || null,
             disabled: field.getDisabled(),
           },
           field.getValidators()

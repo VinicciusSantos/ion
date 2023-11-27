@@ -24,13 +24,12 @@ export class IonInputAreaComponent implements ControlValueAccessor {
   @Input() placeholder?: string;
   @Output() valueChange = new EventEmitter<string>();
 
-  onTouch = () => {};
+  onTouch = (): void => {};
 
-  onChange = (value: string) => {
-    this.valueChange.emit(value);
-  }
+  onChange = (value: string): void => {};
 
   writeValue(value: string): void {
+    this.valueChange.emit(value);
     this.executeFunction(this.onChange, value);
     this.executeFunction(this.onTouch);
     this.value = value;

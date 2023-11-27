@@ -22,14 +22,13 @@ export class IonSwitchComponent implements ControlValueAccessor {
   @Input() disabled = false;
   @Output() atValueChange = new EventEmitter<boolean>();
 
-  onTouch = () => {};
+  onTouch = (): void => {};
 
-  onChange = (value: boolean) => {
-    this.atValueChange.emit(value);
-  };
+  onChange = (value: boolean): void => {};
 
   writeValue(value: boolean): void {
     this.value = value;
+    this.atValueChange.emit(value);
     this.executeFunction(this.onChange, value);
     this.executeFunction(this.onTouch);
   }

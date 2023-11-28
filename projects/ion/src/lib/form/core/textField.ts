@@ -50,7 +50,7 @@ export class TextField extends FormField {
     } else if (this.onClick) {
       const formGroup = this.formControl.root as FormGroup;
       this.onClick({
-        value: this.value,
+        value: this.formControl.value,
         model: formGroup.value,
         form: formGroup,
         field: this,

@@ -14,8 +14,4 @@ import { FormGroup } from '@angular/forms';
 export class FieldInputCounterComponent {
   @Input() field!: CounterInputField;
   @Input() formGroup = new FormGroup({});
-
-  public changedValue(event: { newValue: number }): void {
-    this.field.valueChange(event.newValue);
-  }
 }

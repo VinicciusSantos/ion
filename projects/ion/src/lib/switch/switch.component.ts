@@ -26,6 +26,7 @@ export class IonSwitchComponent implements ControlValueAccessor {
 
   onChange = (value: boolean): void => {};
 
+  // Allow Angular to set the value on the component
   writeValue(value: boolean): void {
     this.value = value;
     this.atValueChange.emit(value);

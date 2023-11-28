@@ -19,6 +19,7 @@ form {
 .ion-form-field {
   display: flex;
   flex-direction: column;
+  transition-duration: 1s;
 
   > label {
     margin-bottom: 4px;

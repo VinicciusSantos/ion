@@ -6,11 +6,11 @@
   <label [for]="field.key">
     {{ field.label }}
   </label>
-  <ion-input-counter
-    [key]="field.key"
+  <ion-input-select
+    [name]="field.key"
     [formControlName]="field.key"
-    [inputSize]="field.inputSize"
-    [count]="formGroup.value[field.key]"
-    (changedValue)="field.valueChange($event)"
-  ></ion-input-counter>
+    [selectOptions]="field.selectOptions"
+    [fullValue]="formGroup.value[field.key]"
+    (valueChange)="field.valueChange($event)"
+  ></ion-input-select>
 </div>

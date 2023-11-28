@@ -6,6 +6,8 @@ import {FormGroup} from '@angular/forms';
 import {SwitchField} from '../projects/ion/src/lib/form/core/switchField';
 import {TextAreaField} from '../projects/ion/src/lib/form/core/textAreaField';
 import {CounterInputField} from '../projects/ion/src/lib/form/core';
+import {InputSelectField} from "../projects/ion/src/lib/form/core/inputSelectField";
+import {ValueToEmmit} from "../projects/ion/src/lib/core/types/input-select";
 
 export default {
   title: 'Ion/Data Entry/Forms',
@@ -30,10 +32,7 @@ Default.args = {
       placeholder: 'Digite alguma coisa',
       size: 3,
       defaultValue: 'estou com um valor default, amigo',
-    })
-      .valueChange(({value}) => {
-      console.log(value);
-    }),
+    }).valueChange(({value}) => console.log(value)),
     new TextField({
       key: 'com_botao',
       label: 'Com botão',
@@ -41,12 +40,13 @@ Default.args = {
       placeholder: 'Digite uma senha',
       iconInput: 'filter',
       inputButtonConfig: {
-        label: 'Botão',
+        label: 'Desabilitar',
         type: 'secondary',
       },
       size: 3,
-    }).clickButton(({value, form, field, model}) => {
-      console.log('value', value);
+    }).clickButton(({field}) => {
+      field.setDisable(!field.getDisabled());
+      field.inputButtonConfig.label = field.getDisabled() ? 'Habilitar' : 'Desabilitar';
     }),
     new TextField({
       key: 'tamanho_maximo',
@@ -91,11 +91,22 @@ Default.args = {
       required: true,
       size: 1,
       switchSize: 'md',
+    }).valueChange(({value, form}) => {
+      form.findField('zapzap').show = value;
+    }),
+    new TextField({
+      key: 'zapzap',
+      label: 'passa o zap, lindo',
+      required: true,
+      placeholder: 'uatizap',
+      show: false,
+      size: 3,
     }),
     new CounterInputField({
       key: 'contador',
       label: 'Counter',
       size: 2,
+      disabled: true,
     }),
     new TextAreaField({
       key: 'textarea',
@@ -104,12 +115,41 @@ Default.args = {
       placeholder: 'Digite uma senha',
       size: 6,
     }),
+    new InputSelectField({
+      key: 'input_select',
+      label: 'Input Select',
+      size: 5,
+      disabled: false,
+      // defaultValue: {
+      //   firstValue: 'teste',
+      //   secondValue: 'teste2',
+      //   optionSelected: {
+      //     key: 'entre',
+      //     label: 'Entre',
+      //     multiple: true
+      //   },
+      // },
+      // selectOptions: [{
+      //   key: 'entre',
+      //   label: 'Entre',
+      //   multiple: true
+      // }]
+    }).valueChange(({value}) => {
+      console.log(value);
+    })
+    // .formatModel((value: ValueToEmmit) => ({
+    //   [value.optionSelected.key]: [value.firstValue, value.secondValue],
+    // }))
   ],
   formGroup: new FormGroup({}),
   model: {
     password: 'teste213',
-    lindo: true,
+    lindo: false,
     textarea: 'Vinicius 13',
     contador: 10,
+    input_select: {
+      firstValue: 'teste123',
+      secondValue: 'teste233',
+    }
   },
 };

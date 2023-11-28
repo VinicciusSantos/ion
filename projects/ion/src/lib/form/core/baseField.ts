@@ -4,7 +4,8 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { IValueChangeCallback } from '../interfaces';
+import {IValueChangeCallback} from '../interfaces';
+import {isBoolean} from "util";
 
 export abstract class FormField {
   show: boolean;
@@ -14,10 +15,6 @@ export abstract class FormField {
   onChanges?: IValueChangeCallback;
   formControl: AbstractControl;
   private _key: string;
-
-  get value(): unknown {
-    return this.formControl.value;
-  }
 
   constructor(
     private disabled = false,
@@ -68,7 +65,7 @@ export abstract class FormField {
     if (isFunction) {
       this.onChanges = changes as IValueChangeCallback;
     }
-    if (changes && this.onChanges && !isFunction) {
+    if ((changes || isBoolean(changes)) && this.onChanges && !isFunction) {
       setTimeout(() => {
         const formGroup = this.formControl.root as FormGroup;
         this.onChanges({

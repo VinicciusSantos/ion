@@ -36,8 +36,8 @@
             currentOption?.firstPlaceholder || 'Digite o valor'
           "
           [disabled]="disabled"
-          [(ngModel)]="value"
-          (ngModelChange)="handleChange()"
+          [(ngModel)]="fullValue.firstValue"
+          (ngModelChange)="writeValue({ firstValue: $event })"
         />
       </div>
     </div>
@@ -46,13 +46,13 @@
       <div class="input second-input" [class.disabled]="disabled">
         <input
           data-testid="second-input"
-          [id]="name"
+          [id]="name + '-final'"
           type="text"
           class="my-input"
           [attr.placeholder]="currentOption?.secondPlaceholder || 'Valor Final'"
           [disabled]="disabled"
-          [(ngModel)]="secondValue"
-          (ngModelChange)="handleChange()"
+          [(ngModel)]="fullValue.secondValue"
+          (ngModelChange)="writeValue({ secondValue: $event })"
         />
       </div>
     </div>

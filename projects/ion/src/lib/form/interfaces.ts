@@ -1,5 +1,5 @@
 import { FormGroup, ValidatorFn } from '@angular/forms';
-import { FormField } from './core';
+import {FormField, TextField} from './core';
 
 export interface IFormModel {
   [x: string]: unknown;
@@ -27,5 +27,5 @@ export type IClickInputButtonCallback = (event: {
   value: unknown;
   model: IFormModel;
   form: FormGroup;
-  field: FormField;
+  field: TextField;
 }) => void;

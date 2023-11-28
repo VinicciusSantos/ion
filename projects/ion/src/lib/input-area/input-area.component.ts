@@ -24,10 +24,23 @@ export class IonInputAreaComponent implements ControlValueAccessor {
   @Input() placeholder?: string;
   @Output() valueChange = new EventEmitter<string>();
 
+  // Save a reference to the change function passed to us by
+  // the Angular form control
+  registerOnChange(fn: (value: string) => void): void {
+    this.onChange = fn;
+  }
+
+  onChange(value: string): void {}
+
+  // Save a reference to the touched function passed to us by
+  // the Angular form control
+  registerOnTouched(fn: () => void): void {
+    this.onTouch = fn;
+  }
+
   onTouch = (): void => {};
 
-  onChange = (value: string): void => {};
-
+  // Allow Angular to set the value on the component
   writeValue(value: string): void {
     this.valueChange.emit(value);
     this.executeFunction(this.onChange, value);
@@ -35,14 +48,7 @@ export class IonInputAreaComponent implements ControlValueAccessor {
     this.value = value;
   }
 
-  registerOnChange(fn: (value: string) => void): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: () => void): void {
-    this.onTouch = fn;
-  }
-
+  // Allow the Angular form control to disable this input
   setDisabledState(disabled: boolean): void {
     this.disabled = disabled;
   }

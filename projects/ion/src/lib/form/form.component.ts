@@ -1,12 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { FormField } from './core/baseField';
-import { clearObject } from '../../core/utils/clearObject';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import {FormControl, FormGroup} from '@angular/forms';
+import {FormField} from './core/baseField';
+import {clearObject} from '../../core/utils/clearObject';
 
 export interface IonFormProps {
   fields: FormField[];
-  formGroup?: FormGroup;
-  model?: any
+  formGroup?: IonFormGroup;
+  model?: object;
+}
+
+interface IonFormGroup extends FormGroup {
+  fields?: FormField[];
+  findField(key: string): FormField | undefined;
 }
 
 @Component({
@@ -18,7 +23,7 @@ export interface IonFormProps {
 export class FormComponent implements OnInit {
   @Input() debugMode = false;
   @Input() fields?: FormField[];
-  @Input() formGroup = new FormGroup({});
+  @Input() formGroup: IonFormGroup = new FormGroup({});
 
   @Input() set model(model: object) {
     this._model = model;
@@ -29,13 +34,10 @@ export class FormComponent implements OnInit {
     return clearObject(value);
   }
 
-  public formFields: FormField[];
-
   private _model = {};
 
   createForm(): void {
-    this.formFields = Object.values(this.fields);
-    this.formFields.forEach((field) => {
+    this.fields.forEach((field) => {
       this.formGroup.addControl(
         field.key,
         new FormControl(
@@ -48,6 +50,12 @@ export class FormComponent implements OnInit {
       );
       field.setFormControl(this.formGroup.controls[field.key]);
     });
+    this.formGroup.fields = this.fields;
+    this.formGroup.findField = this.findField.bind(this);
+  }
+
+  private findField(key: string): FormField | undefined {
+    return this.fields.find((field) => field.key === key);
   }
 
   ngOnInit(): void {

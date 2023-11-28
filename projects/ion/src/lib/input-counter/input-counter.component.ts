@@ -19,6 +19,7 @@ export class IonInputCounterComponent implements ControlValueAccessor {
   @Input() key = '';
   @Input() inputSize: IonInputCount['inputSize'] = 'md';
   @Input() count = 0;
+  @Input() disabled = false;
   @Output() changedValue = new EventEmitter();
 
   private minValue = 0;
@@ -33,18 +34,28 @@ export class IonInputCounterComponent implements ControlValueAccessor {
     this.writeValue(this.count + 1);
   }
 
-  onTouch = (): void => {};
-
-  onChange = (value: number): void => {};
-
-  registerOnChange(fn: (value: number) => void): void {
+  // Save a reference to the change function passed to us by
+  // the Angular form control
+  registerOnChange(fn: (value: string) => void): void {
     this.onChange = fn;
   }
 
+  onChange(value: string): void {}
+
+  // Save a reference to the touched function passed to us by
+  // the Angular form control
   registerOnTouched(fn: () => void): void {
     this.onTouch = fn;
   }
 
+  onTouch = (): void => {};
+
+  // Allow the Angular form control to disable this input
+  setDisabledState(disabled: boolean): void {
+    this.disabled = disabled;
+  }
+
+  // Allow Angular to set the value on the component
   writeValue(value: number | string): void {
     if (!isNaN(Number(value))) {
       const countNumeric = Number(value);

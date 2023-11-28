@@ -1,8 +1,9 @@
 <h1>Formulário</h1>
 <form [formGroup]="formGroup" name="form">
-  <div *ngFor="let field of formFields" [ngClass]="'md-' + field.size">
+  <ng-container *ngFor="let field of fields">
     <div
       *ngIf="field.show"
+      [ngClass]="'md-' + field.size"
       [ngSwitch]="field.type">
 
       <!-- InputText -->
@@ -33,6 +34,13 @@
         [formGroup]="formGroup"
       ></ion-field-input-counter>
 
+      <!-- FieldInputSelect -->
+      <ion-field-input-select
+        *ngSwitchCase="'input-select'"
+        [field]="field"
+        [formGroup]="formGroup"
+      ></ion-field-input-select>
+
       <ng-container *ngIf="field.show && debugMode">
         <div
           *ngIf="
@@ -58,7 +66,7 @@
         <span>Disabled: {{ formGroup.controls[field.key]?.disabled }}</span>
       </ng-container>
     </div>
-  </div>
+  </ng-container>
 </form>
 
 {{ this.model | json }}

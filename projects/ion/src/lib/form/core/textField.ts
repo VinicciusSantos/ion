@@ -1,8 +1,9 @@
-import { FormField } from './baseField';
-import { InputType, IonInputProps } from '../../core/types/input';
-import { IconDirection, IonButtonProps } from '../../core/types';
-import { IClickInputButtonCallback, IFormField } from '../interfaces';
 import { FormGroup } from '@angular/forms';
+
+import { IconDirection, IonButtonProps } from '../../core/types';
+import { InputType, IonInputProps } from '../../core/types/input';
+import { IClickInputButtonCallback, IFormField } from '../interfaces';
+import { FormField } from './baseField';
 
 export type ITextField = IFormField & IonInputProps;
 
@@ -28,7 +29,7 @@ export class TextField extends FormField {
       props.size,
       props.required,
       props.validators,
-      props.defaultValue,
+      props.defaultValue
     );
     this.key = props.key;
     this.label = label;

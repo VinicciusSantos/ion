@@ -1,13 +1,14 @@
-import {Meta, Story} from '@storybook/angular';
-import {TextField} from '../projects/ion/src/lib/form/core/textField';
-import {FormComponent} from '../projects/ion/src/lib/form/form.component';
-import {IonFormModule} from '../projects/ion/src/lib/form/form.module';
-import {FormGroup} from '@angular/forms';
-import {SwitchField} from '../projects/ion/src/lib/form/core/switchField';
-import {TextAreaField} from '../projects/ion/src/lib/form/core/textAreaField';
-import {CounterInputField} from '../projects/ion/src/lib/form/core';
-import {InputSelectField} from "../projects/ion/src/lib/form/core/inputSelectField";
-import {ValueToEmmit} from "../projects/ion/src/lib/core/types/input-select";
+import { FormGroup } from '@angular/forms';
+import { Meta, Story } from '@storybook/angular/types-6-0';
+import {
+  CounterInputField,
+  InputSelectField,
+  SwitchField,
+  TextAreaField,
+  TextField,
+} from '../projects/ion/src/lib/form/core';
+import { FormComponent } from '../projects/ion/src/lib/form/form.component';
+import { IonFormModule } from '../projects/ion/src/lib/form/form.module';
 
 export default {
   title: 'Ion/Data Entry/Forms',
@@ -32,7 +33,7 @@ Default.args = {
       placeholder: 'Digite alguma coisa',
       size: 3,
       defaultValue: 'estou com um valor default, amigo',
-    }).valueChange(({value}) => console.log(value)),
+    }).valueChange(({ value }) => console.log(value)),
     new TextField({
       key: 'com_botao',
       label: 'Com botão',
@@ -44,9 +45,11 @@ Default.args = {
         type: 'secondary',
       },
       size: 3,
-    }).clickButton(({field}) => {
+    }).clickButton(({ field }) => {
       field.setDisable(!field.getDisabled());
-      field.inputButtonConfig.label = field.getDisabled() ? 'Habilitar' : 'Desabilitar';
+      field.inputButtonConfig.label = field.getDisabled()
+        ? 'Habilitar'
+        : 'Desabilitar';
     }),
     new TextField({
       key: 'tamanho_maximo',
@@ -55,7 +58,7 @@ Default.args = {
       placeholder: 'Digite alguma coisa',
       maxLength: '4',
       size: 3,
-    }).valueChange(({value, model}) =>
+    }).valueChange(({ value, model }) =>
       console.log('valueChange', value, model)
     ),
     new TextField({
@@ -91,7 +94,7 @@ Default.args = {
       required: true,
       size: 1,
       switchSize: 'md',
-    }).valueChange(({value, form}) => {
+    }).valueChange(({ value, form }) => {
       form.findField('zapzap').show = value;
     }),
     new TextField({
@@ -134,9 +137,9 @@ Default.args = {
       //   label: 'Entre',
       //   multiple: true
       // }]
-    }).valueChange(({value}) => {
+    }).valueChange(({ value }) => {
       console.log(value);
-    })
+    }),
     // .formatModel((value: ValueToEmmit) => ({
     //   [value.optionSelected.key]: [value.firstValue, value.secondValue],
     // }))
@@ -150,6 +153,6 @@ Default.args = {
     input_select: {
       firstValue: 'teste123',
       secondValue: 'teste233',
-    }
+    },
   },
 };

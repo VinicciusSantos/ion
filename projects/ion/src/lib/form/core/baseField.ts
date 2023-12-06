@@ -4,8 +4,9 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import {IValueChangeCallback} from '../interfaces';
-import {isBoolean} from "util";
+import { isBoolean } from 'util';
+
+import { IValueChangeCallback } from '../interfaces';
 
 export abstract class FormField {
   show: boolean;
@@ -22,7 +23,7 @@ export abstract class FormField {
     size = 4,
     required = false,
     private readonly validators = [],
-    readonly defaultValue,
+    readonly defaultValue
   ) {
     this.show = show;
     this.size = size;

@@ -1,7 +1,8 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
-import {FormField} from './core/baseField';
-import {clearObject} from '../../core/utils/clearObject';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+
+import { clearObject } from '../../core/utils/clearObject';
+import { FormField } from './core/baseField';
 
 export interface IonFormProps {
   fields: FormField[];
@@ -11,11 +12,10 @@ export interface IonFormProps {
 
 interface IonFormGroup extends FormGroup {
   fields?: FormField[];
-  findField(key: string): FormField | undefined;
+  findField?(key: string): FormField | undefined;
 }
 
 @Component({
-  // tslint:disable-next-line:component-selector
   selector: 'ion-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
@@ -54,11 +54,11 @@ export class FormComponent implements OnInit {
     this.formGroup.findField = this.findField.bind(this);
   }
 
-  private findField(key: string): FormField | undefined {
-    return this.fields.find((field) => field.key === key);
-  }
-
   ngOnInit(): void {
     this.createForm();
+  }
+
+  private findField(key: string): FormField | undefined {
+    return this.fields.find((field) => field.key === key);
   }
 }

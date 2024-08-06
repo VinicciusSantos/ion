@@ -1,0 +1,16 @@
+<div
+  [formGroup]="formGroup"
+  *ngIf="formGroup.controls[field.key]"
+  class="ion-form-field"
+>
+  <label [for]="field.key">
+    {{ field.label }}
+  </label>
+  <ion-switch
+    [value]="formGroup.value[field.key]"
+    [key]="field.key"
+    [size]="field.switchSize || 'sm'"
+    [formControlName]="field.key"
+    (atValueChange)="field.valueChange($event)"
+  ></ion-switch>
+</div>

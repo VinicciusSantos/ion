@@ -4,16 +4,19 @@
     iconType="sub"
     type="ghost"
     [size]="inputSize"
+    [disabled]="disabled || count === minValue"
     (ionOnClick)="countDecrement()"
   ></ion-button>
 
   <input
     type="text"
+    [id]="key"
+    [attr.name]="key"
     oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"
-    [(ngModel)]="count"
     data-testid="input-count"
-    (ngModelChange)="changeCount($event)"
-    [value]="count"
+    [ngModel]="count"
+    [disabled]="disabled"
+    (ngModelChange)="writeValue($event)"
   />
 
   <ion-button
@@ -21,6 +24,7 @@
     iconType="add"
     type="ghost"
     [size]="inputSize"
+    [disabled]="disabled"
     (ionOnClick)="countIncrement()"
   ></ion-button>
 </div>

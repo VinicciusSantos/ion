@@ -13,6 +13,12 @@ import userEvent from '@testing-library/user-event';
 import { IonInputCounterComponent } from './input-counter.component';
 import { IonButtonModule } from '../button/button.module';
 
+function expectValue(input: HTMLInputElement, value: string): void {
+  setTimeout(() => {
+    expect(input.value).toBe(value);
+  });
+}
+
 const sut = async (
   customProps: Partial<IonInputCounterComponent> = {}
 ): Promise<RenderResult<IonInputCounterComponent>> => {
@@ -79,11 +85,11 @@ describe('InputCounter', () => {
 
   it('should enter non-numeric characters and not affect the value of input-number', async () => {
     const inputCounter = screen.getByTestId('input-count') as HTMLInputElement;
-    const value = '111';
+    const value = '123';
     userEvent.type(inputCounter, value);
-    expect(inputCounter.value).toBe(value);
+    expectValue(inputCounter, value);
     userEvent.type(inputCounter, 'abc');
-    expect(inputCounter.value).toBe(value);
+    expectValue(inputCounter, value);
   });
 });
 

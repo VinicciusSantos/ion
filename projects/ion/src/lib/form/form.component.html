@@ -1,0 +1,72 @@
+<h1>Formulário</h1>
+<form [formGroup]="formGroup" name="form">
+  <ng-container *ngFor="let field of fields">
+    <div
+      *ngIf="field.show"
+      [ngClass]="'md-' + field.size"
+      [ngSwitch]="field.type">
+
+      <!-- InputText -->
+      <ion-field-text
+        *ngSwitchCase="'text'"
+        [field]="field"
+        [formGroup]="formGroup"
+      ></ion-field-text>
+
+      <!-- TextArea -->
+      <ion-field-text-area
+        *ngSwitchCase="'textarea'"
+        [field]="field"
+        [formGroup]="formGroup"
+      ></ion-field-text-area>
+
+      <!-- SwitchField -->
+      <ion-field-switch
+        *ngSwitchCase="'switch'"
+        [field]="field"
+        [formGroup]="formGroup"
+      ></ion-field-switch>
+
+      <!-- FieldCounter -->
+      <ion-field-input-counter
+        *ngSwitchCase="'counter'"
+        [field]="field"
+        [formGroup]="formGroup"
+      ></ion-field-input-counter>
+
+      <!-- FieldInputSelect -->
+      <ion-field-input-select
+        *ngSwitchCase="'input-select'"
+        [field]="field"
+        [formGroup]="formGroup"
+      ></ion-field-input-select>
+
+      <ng-container *ngIf="field.show && debugMode">
+        <div
+          *ngIf="
+        formGroup.controls[field.key]?.invalid &&
+        (formGroup.controls[field.key]?.dirty ||
+          formGroup.controls[field.key]?.touched)
+      "
+        >
+      <span *ngIf="formGroup.controls[field.key]?.errors?.required">
+        Campo obrigatório!
+      </span>
+          <span *ngIf="formGroup.controls[field.key]?.errors?.email">
+        E-mail inválido.
+      </span>
+          <span *ngIf="formGroup.controls[field.key]?.errors?.minlength">
+        Pequeno demais (tamanho mínimo:
+            {{ formGroup.controls[field.key]?.errors?.minlength.requiredLength }})
+      </span>
+        </div>
+
+        <span>Value: {{ formGroup.controls[field.key]?.value }} | </span>
+        <span>Valid: {{ formGroup.controls[field.key]?.valid }} | </span>
+        <span>Disabled: {{ formGroup.controls[field.key]?.disabled }}</span>
+      </ng-container>
+    </div>
+  </ng-container>
+</form>
+
+{{ this.model | json }}

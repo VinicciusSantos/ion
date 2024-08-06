@@ -6,10 +6,12 @@ import { IonButtonProps } from './button';
 export type InputType = 'text' | 'password' | 'number' | 'email';
 
 export interface IonInputProps {
+  key?: string;
   placeholder?: string;
   button?: string;
   iconInput?: string;
   disabled?: boolean;
+  readonly?: boolean;
   iconDirection?: IconDirection;
   valid?: boolean;
   invalid?: boolean;

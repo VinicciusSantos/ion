@@ -1,0 +1,16 @@
+<div
+  [formGroup]="formGroup"
+  *ngIf="formGroup.controls[field.key]"
+  class="ion-form-field"
+>
+  <label [for]="field.key">
+    {{ field.label }}
+  </label>
+  <ion-input-select
+    [name]="field.key"
+    [formControlName]="field.key"
+    [selectOptions]="field.selectOptions"
+    [fullValue]="formGroup.value[field.key]"
+    (valueChange)="field.valueChange($event)"
+  ></ion-input-select>
+</div>

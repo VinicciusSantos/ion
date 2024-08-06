@@ -1,3 +1,6 @@
+<div *ngIf="label">
+  {{ label }}
+</div>
 <div
   class="input-container"
   [class.input-button]="inputButton && inputButtonConfig"
@@ -12,18 +15,20 @@
     <ion-icon
       data-testid="icon-left"
       class="left-icon"
-      *ngIf="iconDirection === 'left'"
+      *ngIf="iconInput && iconDirection === 'left'"
       [type]="iconInput"
       size="20"
     ></ion-icon>
     <input
       #input
       [type]="inputType"
+      [id]="key"
+      [attr.name]="key"
       [attr.placeholder]="placeholder"
       class="my-input"
       [disabled]="disabled"
       [(ngModel)]="value"
-      (ngModelChange)="onChange($event)"
+      (ngModelChange)="writeValue($event)"
       data-testid="input-element"
       [readonly]="readonly"
       [maxlength]="maxLength"
@@ -36,7 +41,7 @@
     <ion-icon
       data-testid="icon-right"
       class="right-icon"
-      *ngIf="!isClearButtonVisible() && iconDirection === 'right'"
+      *ngIf="!isClearButtonVisible() && iconInput && iconDirection === 'right'"
       [type]="iconInput"
       size="20"
     >
